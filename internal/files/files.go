@@ -30,3 +30,11 @@ func GetList(path string) ([]File, int, error) {
 
 	return list, http.StatusOK, nil
 }
+
+func MkDir(path string) error {
+	err := os.Mkdir(path, 0777)
+	if err != nil {
+		return err
+	}
+	return nil
+}

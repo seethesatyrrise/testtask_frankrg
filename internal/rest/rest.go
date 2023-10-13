@@ -1,6 +1,7 @@
 package rest
 
 import (
+	"fmt"
 	"github.com/gorilla/mux"
 	"html/template"
 	"net/http"
@@ -23,17 +24,29 @@ func (r *Rest) Register(router *mux.Router) {
 	router.HandleFunc("/", r.list)
 	router.HandleFunc("/move/{path}", r.move)
 	router.HandleFunc("/moveup", r.moveUp)
+	router.HandleFunc("/mkdir/{name}", r.mkDir)
 	//router.HandleFunc("/upload", r.upload)
 	//router.HandleFunc("/delete", r.delete)
 	//router.HandleFunc("/rename", r.rename)
 	//router.HandleFunc("/download", r.download)
-	//router.HandleFunc("/mkdir", r.mkdir)
+
 }
 
 func (r *Rest) move(w http.ResponseWriter, req *http.Request) {
 	filePath, _ := mux.Vars(req)["path"]
 	//fmt.Println("path: ", filePath)
 	r.currentPath = filepath.Join(r.currentPath, filePath)
+	http.Redirect(w, req, "/", http.StatusSeeOther)
+}
+
+func (r *Rest) mkDir(w http.ResponseWriter, req *http.Request) {
+	name, _ := mux.Vars(req)["name"]
+	if name != "" {
+		err := files.MkDir(filepath.Join(r.currentPath, name))
+		if err != nil {
+			fmt.Println(err)
+		}
+	}
 	http.Redirect(w, req, "/", http.StatusSeeOther)
 }
 
