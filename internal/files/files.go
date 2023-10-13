@@ -2,7 +2,6 @@ package files
 
 import (
 	"errors"
-	"fmt"
 	"net/http"
 	"os"
 )
@@ -26,7 +25,6 @@ func GetList(path string) ([]File, int, error) {
 			})
 		}
 	}
-	fmt.Println(list)
 
 	return list, http.StatusOK, nil
 }
@@ -36,6 +34,7 @@ func MkDir(path string) error {
 	if err != nil {
 		return err
 	}
+
 	return nil
 }
 
@@ -44,6 +43,7 @@ func Rename(oldPath, newPath string) error {
 	if err != nil {
 		return err
 	}
+
 	return nil
 }
 
@@ -52,12 +52,15 @@ func Remove(path string) error {
 	if err != nil {
 		return err
 	}
+
 	if file.IsDir() {
 		return errors.New("can't remove dir")
 	}
+
 	err = os.Remove(path)
 	if err != nil {
 		return err
 	}
+
 	return nil
 }

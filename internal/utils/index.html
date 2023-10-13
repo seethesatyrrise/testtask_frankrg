@@ -5,8 +5,6 @@
 		<title>File Manager</title>
 	</head>
 	<body>
-		<div>hi</div>
-		<div>{{ . }}</div>
 		<ul>
 			<li>
 				<a href="/moveup">&#128193;<b> /.. </b></a>
@@ -22,9 +20,13 @@
 					<a href="/remove/{{ .Name }}">&#10060;</a>
 					<a href="/download/{{ .Name }}">&#128229;</a>
 				</li>
-
 				{{end}}
 			{{end}}
+			<br><br>
+			<form enctype="multipart/form-data" action="/upload" method="post">
+				<input type="file" name="newFile" />
+				<input type="submit" value="upload" />
+			</form>
 		</ul>
 	</body>
 </html>

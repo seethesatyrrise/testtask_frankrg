@@ -1,0 +1,11 @@
+version: "3.9"
+services:
+  crud:
+    container_name: 'filemanager'
+    build:
+      dockerfile: 'deploy/Dockerfile'
+      context: '../.'
+    volumes:
+      - '../.:/go/src/app/server'
+    ports:
+      - '3300:3300'

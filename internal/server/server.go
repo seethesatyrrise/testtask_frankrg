@@ -2,8 +2,8 @@ package server
 
 import (
 	"context"
-	"fmt"
 	"net/http"
+	"testtask_frankrg/internal/utils"
 )
 
 type Server struct {
@@ -23,11 +23,11 @@ func NewServer(serverConfig *ServerConfig, router http.Handler) (*Server, error)
 func (s *Server) Start() error {
 	go func() {
 		if err := s.httpServer.ListenAndServe(); err != nil {
-			fmt.Println(err.Error())
+			utils.Logger.Error(err.Error())
 		}
 	}()
 
-	fmt.Println("server started")
+	utils.Logger.Info("server started")
 	return nil
 }
 
@@ -36,6 +36,6 @@ func (s *Server) Shutdown(ctx context.Context) error {
 		return s.httpServer.Shutdown(ctx)
 	}
 
-	fmt.Println("server stopped")
+	utils.Logger.Info("server stopped")
 	return nil
 }
