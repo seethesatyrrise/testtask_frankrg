@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>File Manager</title>
+	</head>
+	<body>
+		<div>hi</div>
+		<div>{{ . }}</div>
+		<ul>
+			<li>
+				<a href="/moveup">&#128193;<b> /.. </b></a>
+			</li>
+			{{range .}}
+				{{if .IsDir }}
+				<li>
+					<a href="/move/{{ .Name }}">&#128193;<b>{{ .Name }}</b></a>
+					<a href="/rename/{{ .Name }}">&#128397;</a>
+				</li>
+				{{else}}
+				<li>
+					&#128196;<b>{{ .Name }}</b>
+					<a href="/delete/{{ .Name }}">&#10060;</a>
+					<a href="/download/{{ .Name }}">&#128229;</a>
+					<a href="/rename/{{ .Name }}">&#128397;</a>
+				</li>
+
+				{{end}}
+			{{end}}
+		</ul>
+	</body>
+</html>
