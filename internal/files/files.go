@@ -38,3 +38,11 @@ func MkDir(path string) error {
 	}
 	return nil
 }
+
+func Rename(oldPath, newPath string) error {
+	err := os.Rename(oldPath, newPath)
+	if err != nil {
+		return err
+	}
+	return nil
+}
