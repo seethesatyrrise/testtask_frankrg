@@ -26,8 +26,8 @@ func (r *Rest) Register(router *mux.Router) {
 	router.HandleFunc("/moveup", r.moveUp)
 	router.HandleFunc("/mkdir/{name}", r.mkDir)
 	router.HandleFunc("/rename/{old_name}/{new_name}", r.rename)
+	router.HandleFunc("/remove/{name}", r.remove)
 	//router.HandleFunc("/upload", r.upload)
-	//router.HandleFunc("/delete", r.delete)
 	//router.HandleFunc("/download", r.download)
 
 }
@@ -62,6 +62,17 @@ func (r *Rest) rename(w http.ResponseWriter, req *http.Request) {
 	newName, _ := mux.Vars(req)["new_name"]
 	if oldName != "" && newName != "" {
 		err := files.Rename(filepath.Join(r.currentPath, oldName), filepath.Join(r.currentPath, newName))
+		if err != nil {
+			fmt.Println(err)
+		}
+	}
+	http.Redirect(w, req, "/", http.StatusSeeOther)
+}
+
+func (r *Rest) remove(w http.ResponseWriter, req *http.Request) {
+	name, _ := mux.Vars(req)["name"]
+	if name != "" {
+		err := files.Remove(filepath.Join(r.currentPath, name))
 		if err != nil {
 			fmt.Println(err)
 		}

@@ -46,3 +46,18 @@ func Rename(oldPath, newPath string) error {
 	}
 	return nil
 }
+
+func Remove(path string) error {
+	file, err := os.Stat(path)
+	if err != nil {
+		return err
+	}
+	if file.IsDir() {
+		return errors.New("can't remove dir")
+	}
+	err = os.Remove(path)
+	if err != nil {
+		return err
+	}
+	return nil
+}
