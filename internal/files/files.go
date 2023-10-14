@@ -6,6 +6,13 @@ import (
 	"os"
 )
 
+func CreateRootIfNotExist(path string) error {
+	if _, err := os.Stat(path); os.IsNotExist(err) {
+		return MkDir(path)
+	}
+	return nil
+}
+
 func GetList(path string) ([]File, int, error) {
 	if _, err := os.Stat(path); os.IsNotExist(err) {
 		return nil, http.StatusNotFound, errors.New("path doesn't exist")

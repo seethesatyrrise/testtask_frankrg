@@ -18,6 +18,7 @@ type Rest struct {
 }
 
 func NewRest(rootPath string) *Rest {
+	files.CreateRootIfNotExist(rootPath)
 	return &Rest{currentPath: rootPath, rootPath: rootPath, Template: utils.GetTemplate()}
 }
 
